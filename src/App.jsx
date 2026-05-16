@@ -4,9 +4,11 @@ import {
   SignedOut, 
   SignIn, 
   SignUp, 
-  UserButton 
+  UserButton,
+  useUser
 } from '@clerk/clerk-react';
 import './App.css';
+import RoleManager from './RoleManager';
 
 const Header = () => {
   return (
@@ -27,11 +29,13 @@ const Header = () => {
 };
 
 const HomePage = () => {
+  const { user } = useUser();
   return (
     <div style={{ padding: '2rem' }}>
       <h2>Welcome to the Timesheet Management App</h2>
       <SignedIn>
         <p>You are signed in! You can now manage your timesheets.</p>
+        {user && <RoleManager username={user.username || user.firstName || 'guest'} />}
       </SignedIn>
       <SignedOut>
         <p>Please sign in or register to manage your timesheets.</p>
